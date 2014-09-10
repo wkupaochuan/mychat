@@ -82,22 +82,22 @@ public class WCApplication extends AppContext {
 	}
 	
 	/**
-	 * 用户是否登录
+	 * 判断用户是否登录
 	 * @return
 	 */
 	public boolean isLogin() {
 		try {
 			String loginStr = getProperty("user.login");
 			if (StringUtils.empty(loginStr)) {
-				login = false;
+				this.login = false;
 			}
 			else {
-				login = (loginStr.equals("1")) ? true : false;
+				this.login = (loginStr.equals("1")) ? true : false;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return login;
+		return this.login;
 	}
 
 	/**

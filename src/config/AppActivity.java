@@ -204,6 +204,9 @@ public class AppActivity extends BaseActivity implements AppActivitySupport{
 		Toast.makeText(context, text, longint).show();
 	}
 
+	/**
+	 * 提示信息
+	 */
 	@Override
 	public void showToast(String text) {
 		Toast.makeText(context, text, Toast.LENGTH_SHORT).show();

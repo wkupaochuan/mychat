@@ -46,18 +46,29 @@ public class ApiClent {
     	appContext.saveObject(entity, key);
     }
 	
+	
+	/**
+	 * 发送登陆请求
+	 * @param appContext
+	 * @param mobile		用户登录名称(用手机号登陆)
+	 * @param password		登录密码
+	 * @param callback
+	 */
 	public static void login(WCApplication appContext, String mobile, String password, final ClientCallback callback) {
+		
+		// 构造请求参数
 		RequestParams params = new RequestParams();
 		params.add("mobile", mobile);
 		params.add("uPass", password);
 		params.add("versionInfo", " ");
 		params.add("deviceInfo", " ");
-		Log.i("smarttoy", "logging in^");
+
+		// 发送登陆post请求
 		QYRestClient.post("login.do", params, new AsyncHttpResponseHandler() {
-			@Override
+
+			// 登陆成功
 			public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 				try {
-					Log.i("smarttoy", "login fail");
 					UserEntity user = UserEntity.parse(new String(responseBody));
 					callback.onSuccess(user);
 				} catch (IOException e) {
@@ -67,7 +78,7 @@ public class ApiClent {
 				}
 			}
 			
-			@Override
+			// 登陆失败
 			public void onFailure(int statusCode, Header[] headers,
 					byte[] responseBody, Throwable error) {
 				Log.i("smarttoy", "login fail");

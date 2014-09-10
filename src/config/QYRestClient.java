@@ -1,6 +1,7 @@
 package config;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -28,8 +29,17 @@ public class QYRestClient {
 	      client.get(context, url, params, responseHandler);
 	  }
 
+	  /**
+	   * 发送post请求
+	   * @param url					请求url
+	   * @param params				请求参数
+	   * @param responseHandler		回调函数
+	   */
 	  public static void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-	      client.post(getAbsoluteUrl(url), params, responseHandler);
+		  
+		  Log.e("smarttoy", getAbsoluteUrl(url));
+		  Log.e("smarttoy", params.toString());
+	      //client.post(getAbsoluteUrl(url), params, responseHandler);
 	  }
 	  
 	  public static void post(Context context, String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {

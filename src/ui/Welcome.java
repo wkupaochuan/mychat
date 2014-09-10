@@ -42,22 +42,30 @@ public class Welcome extends AppActivity{
 	 */
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		// 用来统计错误的第三方工具
 		Crashlytics.start(this);
 		
 		// 设置布局
 		final View view = View.inflate(this, R.layout.welcome_page, null);
 		setContentView(view);
 		
+		// 适应不同屏幕分辨率
 		DisplayMetrics dm = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(dm);
 		double diagonalPixels = Math.sqrt(Math.pow(dm.widthPixels, 2) + Math.pow(dm.heightPixels, 2));
 		double screenSize = diagonalPixels / (160*dm.density);
-		appContext.saveScreenSize(screenSize);
-		AlphaAnimation aa = new AlphaAnimation(0.3f,1.0f);
-		aa.setDuration(2000);
-		view.startAnimation(aa);
-		aa.setAnimationListener(new AnimationListener()
+		this.appContext.saveScreenSize(screenSize);
+		
+		// 设置动画
+		AlphaAnimation animation = new AlphaAnimation(0.3f,1.0f);
+		animation.setDuration(3000);
+		view.startAnimation(animation);
+		animation.setAnimationListener(new AnimationListener()
 		{
+			/**
+			 * 动画结束后动作
+			 */
 			public void onAnimationEnd(Animation arg0) {
 				redirectTo();
 			}
@@ -71,20 +79,18 @@ public class Welcome extends AppActivity{
 	/**
 	 * 展示欢迎动画后跳转页面
 	 */
-	private void redirectTo(){     
-		// 未登录用户跳转到登陆页面
-		if(!appContext.isLogin()){
-//			if(!showWhatsNewOnFirstLaunch()){
-				Intent intent = new Intent(this,Login.class);
-				startActivity(intent);
-				AppManager.getAppManager().finishActivity(this);
-//			}
-		}
-		// 登录用户直接跳转
-		else {
+	private void redirectTo(){
+		// 登陆用户直接跳转页面
+		if(this.appContext.isLogin()){
 			Intent intent = new Intent(this, Tabbar.class);
 	        startActivity(intent);
 	        AppManager.getAppManager().finishActivity(this);
+		}
+		// 未登录用户跳转到登陆页面
+		else {
+			Intent intent = new Intent(this,Login.class);
+			startActivity(intent);
+			AppManager.getAppManager().finishActivity(this);
 		}
     }
 	
