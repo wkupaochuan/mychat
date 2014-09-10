@@ -1,6 +1,5 @@
 package config;
 
-import java.util.List;
 import java.util.Properties;
 
 import org.apache.http.client.CookieStore;
@@ -20,8 +19,6 @@ import tools.Logger;
 import tools.StringUtils;
 
 
-import android.app.Activity;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Intent;
 
@@ -32,6 +29,8 @@ import android.content.Intent;
  *
  */
 public class WCApplication extends AppContext {
+	
+	// 单例(采用单例模式)
 	private static WCApplication mApplication;
 	
 	private NotificationManager mNotificationManager;
@@ -40,14 +39,25 @@ public class WCApplication extends AppContext {
 	private String loginUid = "0";	//登录用户的id
 	private String apiKey = "0";	//登录用户的id
 	
+	/**
+	 * 获取单例
+	 * TODO 这里的单例写的有问题(没有初始化)
+	 * @return
+	 */
 	public synchronized static WCApplication getInstance() {
 		return mApplication;
 	}
 	
+	
+	/**
+	 * 获取提示manager
+	 * @return
+	 */
 	public NotificationManager getNotificationManager() {
-		if (mNotificationManager == null)
-			mNotificationManager = (NotificationManager) getSystemService(android.content.Context.NOTIFICATION_SERVICE);
-		return mNotificationManager;
+		if (this.mNotificationManager == null){
+			this.mNotificationManager = (NotificationManager) getSystemService(android.content.Context.NOTIFICATION_SERVICE);
+		}
+		return this.mNotificationManager;
 	}
 	
 	public void onCreate() {
